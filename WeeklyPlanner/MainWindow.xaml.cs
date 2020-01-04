@@ -39,10 +39,10 @@ namespace WeeklyPlanner
         {
             UpdateDates(CurrentFile.StartDate);
             UpdateLegendItems(CurrentFile.LegendItems);
-            UpdatePlannerItems(CurrentFile.Items);
+            UpdatePlannerItems(CurrentFile);
         }
 
-        private void UpdatePlannerItems(PlannerItemCollection items)
+        private void UpdatePlannerItems(PlannerFile file)
         {
 
         }
