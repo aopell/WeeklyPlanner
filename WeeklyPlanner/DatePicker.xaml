@@ -4,15 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WeeklyPlanner"
+        xmlns:xwtk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
         Title="Select Start Date" Height="279.374" Width="303.125">
     <Grid>
+        <xwtk:DateTimePicker Margin="16,52,10,0" Value="{Binding SelectedDate}" Format="LongDate" CurrentDateTimePart="DayName" TextAlignment="Left" TimePickerVisibility="Hidden" Height="40" VerticalAlignment="Top" AutoCloseCalendar="True"/>
         <Label Content="Select Start Date" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
-        <DatePicker Margin="10,52,10,0" VerticalAlignment="Top" SelectedDate="{Binding SelectedDate}"/>
-        <Button Content="Select" Margin="0,0,10,10" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="SelectButtonClick"/>
-        <Button Content="Cancel" HorizontalAlignment="Right" Margin="0,0,90,10" VerticalAlignment="Bottom" Width="75" Click="CancelButtonClick"/>
+        <Button Content="Select" Margin="0,0,10,10" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="SelectButtonClick" IsDefault="True"/>
+        <Button Content="Cancel" HorizontalAlignment="Right" Margin="0,0,90,10" VerticalAlignment="Bottom" Width="75" Click="CancelButtonClick" IsCancel="True"/>
         <Label Content="Previously Selected Date:" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <Label x:Name="CurrentDateLabel" ContentStringFormat="dddd MMMM dd yyyy" Content="{Binding PreviousDate}" HorizontalAlignment="Left" Margin="10,123,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="CurrentDateLabel" ContentStringFormat="dddd, MMMM dd, yyyy" Content="{Binding PreviousDate}" HorizontalAlignment="Left" Margin="10,123,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

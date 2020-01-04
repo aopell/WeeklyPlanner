@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WeeklyPlanner.Items;
 
 namespace WeeklyPlanner
@@ -21,19 +13,13 @@ namespace WeeklyPlanner
     /// </summary>
     public partial class MainWindow : Window
     {
-        private DateTime _startDate;
-        public DateTime StartDate
-        {
-            get => _startDate;
-            set
-            {
-                _startDate = value;
-                UpdateDates(value);
-            }
-        }
+        public PlannerFile CurrentFile { get; set; } = new PlannerFile();
 
-        public PlannerItemCollection Items { get; } = new PlannerItemCollection();
-        public List<LegendItem> LegendItems { get; } = new List<LegendItem>();
+        public MainWindow()
+        {
+            InitializeComponent();
+            RenderCurrentFile();
+        }
 
         private void PrintWindow(Visual v, string description, double widthInches = 8.5, double heightInches = 11)
         {
@@ -49,9 +35,31 @@ namespace WeeklyPlanner
             }
         }
 
+        public void RenderCurrentFile()
+        {
+            UpdateDates(CurrentFile.StartDate);
+            UpdateLegendItems(CurrentFile.LegendItems);
+            UpdatePlannerItems(CurrentFile.Items);
+        }
+
+        private void UpdatePlannerItems(PlannerItemCollection items)
+        {
+
+        }
+
+        private void UpdateLegendItems(List<LegendItem> legendItems)
+        {
+            LegendListBox.Children.Clear();
+
+            foreach (var item in legendItems)
+            {
+                LegendListBox.Children.Add(item);
+            }
+        }
+
         private void UpdateDates(DateTime date)
         {
-            TitleLabel.Content = $"Week of {_startDate:dddd M/d} to {_startDate + TimeSpan.FromDays(6):dddd M/d}";
+            TitleLabel.Content = $"Week of {CurrentFile.StartDate:dddd M/d} to {CurrentFile.StartDate + TimeSpan.FromDays(6):dddd M/d}";
             var dayLabels = new[] { Day1Label, Day2Label, Day3Label, Day4Label, Day5Label, Day6Label, Day7Label };
             for (int i = 0; i < 7; i++)
             {
@@ -59,24 +67,26 @@ namespace WeeklyPlanner
             }
         }
 
-        public MainWindow()
-        {
-            InitializeComponent();
-            StartDate = DateTime.Today;
-        }
-
         private void Title_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            StartDate = new DatePicker(StartDate).PromptDate();
+            CurrentFile.StartDate = new DatePicker(CurrentFile.StartDate).PromptDate();
+            RenderCurrentFile();
         }
 
         private void Legend_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            LegendItem item = new LegendItemDialog().GetItem();
+            LegendItem item = new LegendItemDialog().GetOrModifyItem();
             if (item != null)
             {
-                LegendListBox.Children.Add(item.ToListBoxItem());
+                item.MouseDoubleClick += (a, b) =>
+                {
+                    new LegendItemDialog(item).GetOrModifyItem();
+                    RenderCurrentFile();
+                };
+                CurrentFile.LegendItems.Add(item);
             }
+
+            RenderCurrentFile();
         }
     }
 }

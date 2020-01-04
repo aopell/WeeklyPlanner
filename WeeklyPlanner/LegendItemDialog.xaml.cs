@@ -20,25 +20,31 @@ namespace WeeklyPlanner
     /// </summary>
     public partial class LegendItemDialog : Window
     {
-        public LegendItem LegendItem => new LegendItem(NameTextBox.Text, LegendItemColorPicker.SelectedColor ?? Colors.Black);
-        public LegendItem PreviousLegendItem { get; }
+        public LegendItem LegendItem => previousLegendItem ?? newLegendItem;
+
+        private LegendItem newLegendItem = new LegendItem("", Colors.Black);
+        private LegendItem previousLegendItem = null;
 
         public LegendItemDialog(LegendItem toEdit = null)
         {
-            PreviousLegendItem = toEdit;
+            InitializeComponent();
+
+            previousLegendItem = toEdit;
 
             if (toEdit != null)
             {
-                NameTextBox.Text = toEdit.Name;
+                Title = "Edit Legend Item";
+                HeaderLabel.Content = "Edit Legend Item";
+                NameTextBox.Text = toEdit.Title;
                 LegendItemColorPicker.SelectedColor = toEdit.Color;
             }
-
-            InitializeComponent();
         }
 
         private void SaveButtonClick(object sender, RoutedEventArgs e)
         {
             DialogResult = true;
+            LegendItem.Title = NameTextBox.Text;
+            LegendItem.Color = LegendItemColorPicker.SelectedColor ?? Colors.Black;
             Close();
         }
 
@@ -48,6 +54,6 @@ namespace WeeklyPlanner
             Close();
         }
 
-        public LegendItem GetItem() => ShowDialog() == true ? LegendItem : PreviousLegendItem;
+        public LegendItem GetOrModifyItem() => ShowDialog() == true ? LegendItem : previousLegendItem;
     }
 }

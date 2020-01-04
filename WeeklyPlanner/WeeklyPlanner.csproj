@@ -120,6 +120,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PlannerFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

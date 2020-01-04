@@ -6,14 +6,19 @@
         xmlns:local="clr-namespace:WeeklyPlanner"
         xmlns:xwtk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Edit Legend Item" Height="187" Width="345">
+        FocusManager.FocusedElement="{Binding ElementName=NameTextBox}"
+        WindowStartupLocation="CenterScreen"
+        MinHeight="194.402"
+        MaxHeight="194.402"
+        MinWidth="250"
+        Title="Create Legend Item" Height="194.402" Width="360.194">
     <Grid>
-        <Label Content="Edit Legend Item" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
+        <Label Content="Create Legend Item" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Name="HeaderLabel"/>
         <Label Content="Name" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <TextBox x:Name="NameTextBox" Height="23" Margin="59,55,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBox x:Name="NameTextBox" Height="26" Margin="59,52,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <xwtk:ColorPicker x:Name="LegendItemColorPicker" Margin="59,83,10,0" DisplayColorAndName="True" ShowRecentColors="True" SelectedColor="#FFFF0000" UsingAlphaChannel="False" Height="32" VerticalAlignment="Top"/>
         <Label Content="Color" HorizontalAlignment="Left" Margin="10,86,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <Button Content="Save" Margin="0,0,10,10" HorizontalAlignment="Right" Width="75" Height="20" VerticalAlignment="Bottom" Click="SaveButtonClick"/>
-        <Button Content="Cancel" HorizontalAlignment="Left" Margin="172,126,0,0" VerticalAlignment="Top" Width="75" Click="CancelButtonClick"/>
+        <Button Content="Save" Margin="0,0,10,10" HorizontalAlignment="Right" Width="75" Height="20" VerticalAlignment="Bottom" Click="SaveButtonClick" IsDefault="True"/>
+        <Button Content="Cancel" Margin="0,0,90,10" Click="CancelButtonClick" HorizontalAlignment="Right" Width="75" Height="20" VerticalAlignment="Bottom" IsCancel="True"/>
     </Grid>
 </Window>
