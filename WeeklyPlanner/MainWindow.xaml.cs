@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using WeeklyPlanner.Items;
+using WeeklyPlanner.Models;
 
 namespace WeeklyPlanner
 {
@@ -28,7 +28,7 @@ namespace WeeklyPlanner
 
             // Print(MainGrid);
 
-            PrintDialog printDialog = new PrintDialog();
+            var printDialog = new PrintDialog();
             if (printDialog.ShowDialog() == true)
             {
                 printDialog.PrintVisual(MainGrid, description);
@@ -53,7 +53,7 @@ namespace WeeklyPlanner
 
             foreach (var item in legendItems)
             {
-                LegendListBox.Children.Add(item);
+                LegendListBox.Children.Add(item.Display);
             }
         }
 
@@ -78,7 +78,7 @@ namespace WeeklyPlanner
             LegendItem item = new LegendItemDialog().GetOrModifyItem();
             if (item != null)
             {
-                item.MouseDoubleClick += (a, b) =>
+                item.Display.MouseDoubleClick += (a, b) =>
                 {
                     new LegendItemDialog(item).GetOrModifyItem();
                     RenderCurrentFile();
@@ -87,6 +87,11 @@ namespace WeeklyPlanner
             }
 
             RenderCurrentFile();
+        }
+
+        private void Label_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            new EventDialog(CurrentFile).ShowDialog();
         }
     }
 }

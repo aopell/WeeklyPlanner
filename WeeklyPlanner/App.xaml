@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:WeeklyPlanner"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style BasedOn="{StaticResource {x:Type ToggleButton}}" TargetType="RadioButton"/>
     </Application.Resources>
 </Application>

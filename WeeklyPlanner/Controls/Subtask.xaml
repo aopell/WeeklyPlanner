@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="WeeklyPlanner.Controls.Subtask"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WeeklyPlanner.Controls"
+             mc:Ignorable="d"
+             x:Name="Root"
+             d:DesignHeight="36" d:DesignWidth="400" Width="400" MinWidth="300" MinHeight="36" MaxHeight="36">
+    <Grid x:Name="LayoutRoot" DataContext="{Binding ElementName=Root}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <local:FormattedWatermarkTextBox Margin="5,5,5,5" Text="{Binding TextBoxText}" Bold="{Binding TextBoxBold}" Italic="{Binding TextBoxItalic}"></local:FormattedWatermarkTextBox>
+        <ComboBox x:Name="ComboBox" Grid.Column="1" Margin="5,5,5,5" VerticalContentAlignment="Center" ItemsSource="{Binding ComboBoxItems}"/>
+    </Grid>
+</UserControl>

@@ -1,14 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace WeeklyPlanner.Items
+namespace WeeklyPlanner.Models
 {
-    public class PlannerItem
-    {
-        public string Title { get; set; }
-        public TextFormatting TextFormatting { get; set; } = TextFormatting.None;
-        public Weekdays Weekdays { get; set; } = Weekdays.None;
-    }
-
     [Flags]
     public enum Weekdays
     {

@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="WeeklyPlanner.Controls.FormattedWatermarkTextBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WeeklyPlanner.Controls"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d"
+             x:Name="Root"
+             d:DesignHeight="26" d:DesignWidth="250">
+    <UserControl.Resources>
+        <Style x:Key="ControlStyle" TargetType="{x:Type xctk:WatermarkTextBox}">
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="FontStyle" Value="Normal"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Bold, ElementName=FormattingButtons}" Value="True">
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Italic, ElementName=FormattingButtons}" Value="True">
+                    <Setter Property="FontStyle" Value="Italic"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid DataContext="{Binding ElementName=Root}">
+        <xctk:WatermarkTextBox VerticalContentAlignment="Center" x:Name="TextBox" Watermark="{Binding Watermark, FallbackValue=Text}" Text="{Binding Text}" Margin="0,0,58,0" Style="{StaticResource ControlStyle}"></xctk:WatermarkTextBox>
+        <local:TextFormattingButtons x:Name="FormattingButtons" HorizontalAlignment="Right" Bold="{Binding Bold}" Italic="{Binding Italic}"/>
+    </Grid>
+</UserControl>

@@ -1,0 +1,108 @@
+﻿<Window x:Class="WeeklyPlanner.EventDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xwtk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:WeeklyPlanner"
+        xmlns:dd="urn:gong-wpf-dragdrop"
+        xmlns:c="clr-namespace:WeeklyPlanner.Controls"
+        mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        Title="EventDialog" Height="580" MinHeight="580" MaxHeight="580" Width="500" MinWidth="500">
+    <Grid>
+        <Label Content="Create Event" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
+        <GroupBox Header="General" Height="98" Margin="10,52,10,0" VerticalAlignment="Top">
+            <Grid>
+                <Label Content="Legend Item" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                <ComboBox x:Name="EventLegendItemComboBox" Margin="91,10,10,0" VerticalAlignment="Top" Height="26" ItemsSource="{Binding PlannerFile.LegendItems}" VerticalContentAlignment="Center"/>
+                <Label Content="Title" HorizontalAlignment="Left" Margin="54,41,0,0" VerticalAlignment="Top"/>
+                <c:FormattedWatermarkTextBox x:Name="EventTitleTextBox" Margin="91,41,10,8"></c:FormattedWatermarkTextBox>
+            </Grid>
+        </GroupBox>
+        <Button x:Name="SaveButton" Content="Save" Margin="0,0,10,8" HorizontalAlignment="Right" Width="75" Height="20" VerticalAlignment="Bottom" IsDefault="True"/>
+        <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Right" Margin="0,0,90,8" VerticalAlignment="Bottom" Width="75" IsCancel="True"/>
+        <TabControl Margin="10,150,10,35">
+            <TabItem Header="Checklist Entry">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="9*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Which Checklist?" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+                    <RadioButton x:Name="ChecklistEntryNoneButton" Content="None" Grid.Column="1" IsChecked="True" GroupName="ChecklistEntry" Margin="5,5,5,5"/>
+                    <RadioButton x:Name="ChecklistEntryPrimaryButton" Content="Primary" Grid.Column="2" GroupName="ChecklistEntry" Margin="5,5,5,5"/>
+                    <RadioButton x:Name="ChecklistEntrySecondaryButton" Content="Secondary" Grid.Column="3" GroupName="ChecklistEntry" Margin="5,5,5,5"/>
+
+                    <Rectangle Fill="Gray" Height="1" Margin="0,2,0,0" Grid.Row="1" Grid.ColumnSpan="4" VerticalAlignment="Top"/>
+
+                    <Label Content="Subtasks" Grid.Row="1" HorizontalAlignment="Left" Margin="4,10,0,0" FontWeight="Bold" Width="103" Height="26" VerticalAlignment="Top"/>
+                    <Button Content="Add Subtask" Grid.Row="1" Grid.Column="3" Margin="0,10,6,0" FontSize="10" Click="AddSubtask_Click" HorizontalAlignment="Right" Width="75" Height="20" VerticalAlignment="Top"/>
+                    <ListBox x:Name="SubtaskListBox" Grid.ColumnSpan="4" Margin="4,35,6,10" Grid.Row="1" dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True" KeyDown="SubtaskListBox_KeyDown">
+                    </ListBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Planner Entry">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" MinWidth="80" MaxWidth="150"/>
+                        <ColumnDefinition Width="3"/>
+                        <ColumnDefinition Width="3*" MinWidth="150"/>
+                        <ColumnDefinition Width="3"/>
+                        <ColumnDefinition Width="2*" MinWidth="100"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Day" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch" Grid.RowSpan="8"></GridSplitter>
+                    <Label Content="Title" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" FontWeight="Bold"/>
+                    <GridSplitter Grid.Column="3" Width="3" HorizontalAlignment="Stretch" Grid.RowSpan="8"></GridSplitter>
+                    <Label Content="Legend Item" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="4" Margin="0" FontWeight="Bold"/>
+
+                    <ToggleButton x:Name="PlannerDay1Button" Content="Sunday" Grid.Row="1" Margin="5,5,5,5"/>
+                    <ToggleButton x:Name="PlannerDay2Button" Content="Monday" Grid.Row="2" Margin="5,5,5,5"/>
+                    <ToggleButton x:Name="PlannerDay3Button" Content="Tuesday" Grid.Row="3" Margin="5,5,5,5"/>
+                    <ToggleButton x:Name="PlannerDay4Button" Content="Wednesday" Grid.Row="4" Margin="5,5,5,5"/>
+                    <ToggleButton x:Name="PlannerDay5Button" Content="Thursday" Grid.Row="5" Margin="5,5,5,5"/>
+                    <ToggleButton x:Name="PlannerDay6Button" Content="Friday" Grid.Row="6" Margin="5,5,5,5"/>
+                    <ToggleButton x:Name="PlannerDay7Button" Content="Saturday" Grid.Row="7" Margin="5,5,5,5"/>
+                    <ToggleButton x:Name="PlannerNextWeekButton" Content="Next Week" Grid.Row="8" Margin="5,5,5,5"/>
+
+                    <c:FormattedWatermarkTextBox Watermark="{Binding ElementName=EventTitleTextBox.Text}" x:Name="PlannerDay1TitleTextBox" Grid.Column="2" Margin="7,5" Grid.Row="1" IsEnabled="{Binding PlannerDay1Button.IsChecked}"></c:FormattedWatermarkTextBox>
+                    <c:FormattedWatermarkTextBox Watermark="{Binding ElementName=EventTitleTextBox.Text}" x:Name="PlannerDay2TitleTextBox" Grid.Column="2" Margin="7,5" Grid.Row="2" IsEnabled="{Binding PlannerDay2Button.IsChecked}"></c:FormattedWatermarkTextBox>
+                    <c:FormattedWatermarkTextBox Watermark="{Binding ElementName=EventTitleTextBox.Text}" x:Name="PlannerDay3TitleTextBox" Grid.Column="2" Margin="7,5" Grid.Row="3" IsEnabled="{Binding PlannerDay3Button.IsChecked}"></c:FormattedWatermarkTextBox>
+                    <c:FormattedWatermarkTextBox Watermark="{Binding ElementName=EventTitleTextBox.Text}" x:Name="PlannerDay4TitleTextBox" Grid.Column="2" Margin="7,5" Grid.Row="4" IsEnabled="{Binding PlannerDay4Button.IsChecked}"></c:FormattedWatermarkTextBox>
+                    <c:FormattedWatermarkTextBox Watermark="{Binding ElementName=EventTitleTextBox.Text}" x:Name="PlannerDay5TitleTextBox" Grid.Column="2" Margin="7,5" Grid.Row="5" IsEnabled="{Binding PlannerDay5Button.IsChecked}"></c:FormattedWatermarkTextBox>
+                    <c:FormattedWatermarkTextBox Watermark="{Binding ElementName=EventTitleTextBox.Text}" x:Name="PlannerDay6TitleTextBox" Grid.Column="2" Margin="7,5" Grid.Row="6" IsEnabled="{Binding PlannerDay6Button.IsChecked}"></c:FormattedWatermarkTextBox>
+                    <c:FormattedWatermarkTextBox Watermark="{Binding ElementName=EventTitleTextBox.Text}" x:Name="PlannerDay7TitleTextBox" Grid.Column="2" Margin="7,5" Grid.Row="7" IsEnabled="{Binding PlannerDay7Button.IsChecked}"></c:FormattedWatermarkTextBox>
+                    <c:FormattedWatermarkTextBox Watermark="{Binding ElementName=EventTitleTextBox.Text}" x:Name="PlannerNextWeekTitleTextBox" Grid.Column="2" Margin="7,5" Grid.Row="8" IsEnabled="{Binding PlannerNextWeekButton.IsChecked}"></c:FormattedWatermarkTextBox>
+
+                    <ComboBox x:Name="PlannerDay1LegendItem" Grid.Column="4" Margin="5,5,5,5" Grid.Row="1" VerticalContentAlignment="Center" IsEnabled="{Binding PlannerDay1Button.IsChecked}"/>
+                    <ComboBox x:Name="PlannerDay2LegendItem" Grid.Column="4" Margin="5,5,5,5" Grid.Row="2" VerticalContentAlignment="Center" IsEnabled="{Binding PlannerDay2Button.IsChecked}"/>
+                    <ComboBox x:Name="PlannerDay3LegendItem" Grid.Column="4" Margin="5,5,5,5" Grid.Row="3" VerticalContentAlignment="Center" IsEnabled="{Binding PlannerDay3Button.IsChecked}"/>
+                    <ComboBox x:Name="PlannerDay4LegendItem" Grid.Column="4" Margin="5,5,5,5" Grid.Row="4" VerticalContentAlignment="Center" IsEnabled="{Binding PlannerDay4Button.IsChecked}"/>
+                    <ComboBox x:Name="PlannerDay5LegendItem" Grid.Column="4" Margin="5,5,5,5" Grid.Row="5" VerticalContentAlignment="Center" IsEnabled="{Binding PlannerDay5Button.IsChecked}"/>
+                    <ComboBox x:Name="PlannerDay6LegendItem" Grid.Column="4" Margin="5,5,5,5" Grid.Row="6" VerticalContentAlignment="Center" IsEnabled="{Binding PlannerDay6Button.IsChecked}"/>
+                    <ComboBox x:Name="PlannerDay7LegendItem" Grid.Column="4" Margin="5,5,5,5" Grid.Row="7" VerticalContentAlignment="Center" IsEnabled="{Binding PlannerDay7Button.IsChecked}"/>
+                    <ComboBox x:Name="PlannerNextWeekLegendItem" Grid.Column="4" Margin="5,5,5,5" Grid.Row="8" VerticalContentAlignment="Center" IsEnabled="{Binding PlannerNextWeekButton.IsChecked}"/>
+
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

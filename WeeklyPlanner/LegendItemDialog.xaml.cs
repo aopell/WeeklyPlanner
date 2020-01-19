@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using WeeklyPlanner.Items;
+using WeeklyPlanner.Models;
 
 namespace WeeklyPlanner
 {
@@ -22,7 +22,7 @@ namespace WeeklyPlanner
     {
         public LegendItem LegendItem => previousLegendItem ?? newLegendItem;
 
-        private LegendItem newLegendItem = new LegendItem("", Colors.Black);
+        private LegendItem newLegendItem = new LegendItem { Name = "", Color = Colors.Black };
         private LegendItem previousLegendItem = null;
 
         public LegendItemDialog(LegendItem toEdit = null)
@@ -35,7 +35,7 @@ namespace WeeklyPlanner
             {
                 Title = "Edit Legend Item";
                 HeaderLabel.Content = "Edit Legend Item";
-                NameTextBox.Text = toEdit.Title;
+                NameTextBox.Text = toEdit.Name;
                 LegendItemColorPicker.SelectedColor = toEdit.Color;
             }
         }
@@ -43,7 +43,7 @@ namespace WeeklyPlanner
         private void SaveButtonClick(object sender, RoutedEventArgs e)
         {
             DialogResult = true;
-            LegendItem.Title = NameTextBox.Text;
+            LegendItem.Name = NameTextBox.Text;
             LegendItem.Color = LegendItemColorPicker.SelectedColor ?? Colors.Black;
             Close();
         }
