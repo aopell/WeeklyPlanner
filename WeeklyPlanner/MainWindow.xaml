@@ -91,13 +91,20 @@
                 <Grid>
                     <Label Content="LEGEND" VerticalAlignment="Top" Margin="58,0" FontWeight="Bold"/>
 
-                    <UniformGrid x:Name="LegendListBox" Columns="2" Margin="10,22,10,7" dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True">
-                        <ListBoxItem Background="{x:Null}" Content="■ EE 16B" Foreground="Red" FontSize="10"/>
-                        <ListBoxItem Content="■ CS 70" Foreground="DodgerBlue" FontSize="10"/>
-                        <ListBoxItem Content="■ DATA 100" Foreground="Green" FontSize="10"/>
-                        <ListBoxItem Content="■ L&amp;S 25" Foreground="Purple" FontSize="10"/>
-                        <ListBoxItem Content="■ OTHER" Foreground="Navy" FontSize="10"/>
-                    </UniformGrid>
+                    <ItemsControl Margin="10,22,10,7" x:Name="LegendListBox" dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True" ItemsSource="{Binding LegendItemDisplays}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="2" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <!--<ItemsControl.Items>
+                            <ListBoxItem Background="{x:Null}" Content="■ EE 16B" Foreground="Red" FontSize="10"/>
+                            <ListBoxItem Content="■ CS 70" Foreground="DodgerBlue" FontSize="10"/>
+                            <ListBoxItem Content="■ DATA 100" Foreground="Green" FontSize="10"/>
+                            <ListBoxItem Content="■ L&amp;S 25" Foreground="Purple" FontSize="10"/>
+                            <ListBoxItem Content="■ OTHER" Foreground="Navy" FontSize="10"/>
+                        </ItemsControl.Items>-->
+                    </ItemsControl>
                 </Grid>
             </Border>
             <ListBox x:Name="ToDoList" Margin="0,41,11,0" BorderBrush="{x:Null}" FontSize="16">

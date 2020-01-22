@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -14,6 +17,8 @@ namespace WeeklyPlanner
     public partial class MainWindow : Window
     {
         public PlannerFile CurrentFile { get; set; } = new PlannerFile();
+
+        public ObservableCollection<ListBoxItem> LegendItemDisplays { get; } = new ObservableCollection<ListBoxItem>();
 
         public MainWindow()
         {
@@ -49,7 +54,8 @@ namespace WeeklyPlanner
 
         private void UpdateLegendItems(List<LegendItem> legendItems)
         {
-            LegendListBox.Children.Clear();
+            LegendItemDisplays.CollectionChanged -= LegendItemDisplays_CollectionChanged;
+            LegendItemDisplays.Clear();
 
             foreach (var item in legendItems)
             {
@@ -65,8 +71,9 @@ namespace WeeklyPlanner
                     }
                     RenderCurrentFile();
                 };
-                LegendListBox.Children.Add(display);
+                LegendItemDisplays.Add(display);
             }
+            LegendItemDisplays.CollectionChanged += LegendItemDisplays_CollectionChanged;
         }
 
         private void UpdateDates(DateTime date)
@@ -99,6 +106,26 @@ namespace WeeklyPlanner
         private void Label_MouseDown(object sender, MouseButtonEventArgs e)
         {
             new EventDialog(CurrentFile).ShowDialog();
+        }
+
+        private LegendItem moveTarget = null;
+        private void LegendItemDisplays_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    CurrentFile.LegendItems.Insert(e.NewStartingIndex, moveTarget);
+                    moveTarget = null;
+                    RenderCurrentFile();
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    moveTarget = CurrentFile.LegendItems[e.OldStartingIndex];
+                    CurrentFile.LegendItems.RemoveAt(e.OldStartingIndex);
+                    break;
+                default:
+                    moveTarget = null;
+                    break;
+            }
         }
     }
 }
