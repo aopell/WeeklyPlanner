@@ -43,8 +43,8 @@
                     <Rectangle Fill="Gray" Height="1" Margin="0,2,0,0" Grid.Row="1" Grid.ColumnSpan="4" VerticalAlignment="Top"/>
 
                     <Label Content="Subtasks" Grid.Row="1" HorizontalAlignment="Left" Margin="4,10,0,0" FontWeight="Bold" Width="103" Height="26" VerticalAlignment="Top"/>
-                    <Button Content="Add Subtask" Grid.Row="1" Grid.Column="3" Margin="0,10,6,0" FontSize="10" Click="AddSubtask_Click" HorizontalAlignment="Right" Width="75" Height="20" VerticalAlignment="Top"/>
-                    <ListBox x:Name="SubtaskListBox" Grid.ColumnSpan="4" Margin="4,35,6,10" Grid.Row="1" dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True" KeyDown="SubtaskListBox_KeyDown">
+                    <Button Content="Add Subtask" Grid.Row="1" Grid.Column="3" Margin="0,10,6,0" FontSize="10" Click="AddSubtask_Click" HorizontalAlignment="Right" Width="75" Height="20" VerticalAlignment="Top" IsEnabled="{Binding ElementName=ChecklistEntryNoneButton, Path=IsChecked, Converter={StaticResource InverseBooleanConverter}}"/>
+                    <ListBox x:Name="SubtaskListBox" Grid.ColumnSpan="4" Margin="4,35,6,10" Grid.Row="1" dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True" KeyDown="SubtaskListBox_KeyDown" IsEnabled="{Binding ElementName=ChecklistEntryNoneButton, Path=IsChecked, Converter={StaticResource InverseBooleanConverter}}">
                     </ListBox>
                 </Grid>
             </TabItem>
@@ -83,23 +83,23 @@
                     <ToggleButton x:Name="PlannerDay7Button" Content="Saturday" Grid.Row="7" Margin="5,5,5,5"/>
                     <ToggleButton x:Name="PlannerNextWeekButton" Content="Next Week" Grid.Row="8" Margin="5,5,5,5"/>
 
-                    <c:FormattedWatermarkTextBox Watermark="{Binding ElementName=EventTitleTextBox.Text}" x:Name="PlannerDay1TitleTextBox" Grid.Column="2" Margin="7,5" Grid.Row="1" IsEnabled="{Binding PlannerDay1Button.IsChecked}"></c:FormattedWatermarkTextBox>
-                    <c:FormattedWatermarkTextBox Watermark="{Binding ElementName=EventTitleTextBox.Text}" x:Name="PlannerDay2TitleTextBox" Grid.Column="2" Margin="7,5" Grid.Row="2" IsEnabled="{Binding PlannerDay2Button.IsChecked}"></c:FormattedWatermarkTextBox>
-                    <c:FormattedWatermarkTextBox Watermark="{Binding ElementName=EventTitleTextBox.Text}" x:Name="PlannerDay3TitleTextBox" Grid.Column="2" Margin="7,5" Grid.Row="3" IsEnabled="{Binding PlannerDay3Button.IsChecked}"></c:FormattedWatermarkTextBox>
-                    <c:FormattedWatermarkTextBox Watermark="{Binding ElementName=EventTitleTextBox.Text}" x:Name="PlannerDay4TitleTextBox" Grid.Column="2" Margin="7,5" Grid.Row="4" IsEnabled="{Binding PlannerDay4Button.IsChecked}"></c:FormattedWatermarkTextBox>
-                    <c:FormattedWatermarkTextBox Watermark="{Binding ElementName=EventTitleTextBox.Text}" x:Name="PlannerDay5TitleTextBox" Grid.Column="2" Margin="7,5" Grid.Row="5" IsEnabled="{Binding PlannerDay5Button.IsChecked}"></c:FormattedWatermarkTextBox>
-                    <c:FormattedWatermarkTextBox Watermark="{Binding ElementName=EventTitleTextBox.Text}" x:Name="PlannerDay6TitleTextBox" Grid.Column="2" Margin="7,5" Grid.Row="6" IsEnabled="{Binding PlannerDay6Button.IsChecked}"></c:FormattedWatermarkTextBox>
-                    <c:FormattedWatermarkTextBox Watermark="{Binding ElementName=EventTitleTextBox.Text}" x:Name="PlannerDay7TitleTextBox" Grid.Column="2" Margin="7,5" Grid.Row="7" IsEnabled="{Binding PlannerDay7Button.IsChecked}"></c:FormattedWatermarkTextBox>
-                    <c:FormattedWatermarkTextBox Watermark="{Binding ElementName=EventTitleTextBox.Text}" x:Name="PlannerNextWeekTitleTextBox" Grid.Column="2" Margin="7,5" Grid.Row="8" IsEnabled="{Binding PlannerNextWeekButton.IsChecked}"></c:FormattedWatermarkTextBox>
+                    <c:FormattedWatermarkTextBox Watermark="{Binding ElementName=EventTitleTextBox, Path=Text}" x:Name="PlannerDay1TitleTextBox" Grid.Column="2" Margin="7,5" Grid.Row="1" IsEnabled="{Binding ElementName=PlannerDay1Button, Path=IsChecked}"></c:FormattedWatermarkTextBox>
+                    <c:FormattedWatermarkTextBox Watermark="{Binding ElementName=EventTitleTextBox, Path=Text}" x:Name="PlannerDay2TitleTextBox" Grid.Column="2" Margin="7,5" Grid.Row="2" IsEnabled="{Binding ElementName=PlannerDay2Button, Path=IsChecked}"></c:FormattedWatermarkTextBox>
+                    <c:FormattedWatermarkTextBox Watermark="{Binding ElementName=EventTitleTextBox, Path=Text}" x:Name="PlannerDay3TitleTextBox" Grid.Column="2" Margin="7,5" Grid.Row="3" IsEnabled="{Binding ElementName=PlannerDay3Button, Path=IsChecked}"></c:FormattedWatermarkTextBox>
+                    <c:FormattedWatermarkTextBox Watermark="{Binding ElementName=EventTitleTextBox, Path=Text}" x:Name="PlannerDay4TitleTextBox" Grid.Column="2" Margin="7,5" Grid.Row="4" IsEnabled="{Binding ElementName=PlannerDay4Button, Path=IsChecked}"></c:FormattedWatermarkTextBox>
+                    <c:FormattedWatermarkTextBox Watermark="{Binding ElementName=EventTitleTextBox, Path=Text}" x:Name="PlannerDay5TitleTextBox" Grid.Column="2" Margin="7,5" Grid.Row="5" IsEnabled="{Binding ElementName=PlannerDay5Button, Path=IsChecked}"></c:FormattedWatermarkTextBox>
+                    <c:FormattedWatermarkTextBox Watermark="{Binding ElementName=EventTitleTextBox, Path=Text}" x:Name="PlannerDay6TitleTextBox" Grid.Column="2" Margin="7,5" Grid.Row="6" IsEnabled="{Binding ElementName=PlannerDay6Button, Path=IsChecked}"></c:FormattedWatermarkTextBox>
+                    <c:FormattedWatermarkTextBox Watermark="{Binding ElementName=EventTitleTextBox, Path=Text}" x:Name="PlannerDay7TitleTextBox" Grid.Column="2" Margin="7,5" Grid.Row="7" IsEnabled="{Binding ElementName=PlannerDay7Button, Path=IsChecked}"></c:FormattedWatermarkTextBox>
+                    <c:FormattedWatermarkTextBox Watermark="{Binding ElementName=EventTitleTextBox, Path=Text}" x:Name="PlannerNextWeekTitleTextBox" Grid.Column="2" Margin="7,5" Grid.Row="8" IsEnabled="{Binding ElementName=PlannerNextWeekButton, Path=IsChecked}"></c:FormattedWatermarkTextBox>
 
-                    <ComboBox x:Name="PlannerDay1LegendItem" Grid.Column="4" Margin="5,5,5,5" Grid.Row="1" VerticalContentAlignment="Center" IsEnabled="{Binding PlannerDay1Button.IsChecked}"/>
-                    <ComboBox x:Name="PlannerDay2LegendItem" Grid.Column="4" Margin="5,5,5,5" Grid.Row="2" VerticalContentAlignment="Center" IsEnabled="{Binding PlannerDay2Button.IsChecked}"/>
-                    <ComboBox x:Name="PlannerDay3LegendItem" Grid.Column="4" Margin="5,5,5,5" Grid.Row="3" VerticalContentAlignment="Center" IsEnabled="{Binding PlannerDay3Button.IsChecked}"/>
-                    <ComboBox x:Name="PlannerDay4LegendItem" Grid.Column="4" Margin="5,5,5,5" Grid.Row="4" VerticalContentAlignment="Center" IsEnabled="{Binding PlannerDay4Button.IsChecked}"/>
-                    <ComboBox x:Name="PlannerDay5LegendItem" Grid.Column="4" Margin="5,5,5,5" Grid.Row="5" VerticalContentAlignment="Center" IsEnabled="{Binding PlannerDay5Button.IsChecked}"/>
-                    <ComboBox x:Name="PlannerDay6LegendItem" Grid.Column="4" Margin="5,5,5,5" Grid.Row="6" VerticalContentAlignment="Center" IsEnabled="{Binding PlannerDay6Button.IsChecked}"/>
-                    <ComboBox x:Name="PlannerDay7LegendItem" Grid.Column="4" Margin="5,5,5,5" Grid.Row="7" VerticalContentAlignment="Center" IsEnabled="{Binding PlannerDay7Button.IsChecked}"/>
-                    <ComboBox x:Name="PlannerNextWeekLegendItem" Grid.Column="4" Margin="5,5,5,5" Grid.Row="8" VerticalContentAlignment="Center" IsEnabled="{Binding PlannerNextWeekButton.IsChecked}"/>
+                    <ComboBox x:Name="PlannerDay1LegendItem" Grid.Column="4" Margin="5,5,5,5" Grid.Row="1" VerticalContentAlignment="Center" IsEnabled="{Binding ElementName=PlannerDay1Button, Path=IsChecked}"/>
+                    <ComboBox x:Name="PlannerDay2LegendItem" Grid.Column="4" Margin="5,5,5,5" Grid.Row="2" VerticalContentAlignment="Center" IsEnabled="{Binding ElementName=PlannerDay2Button, Path=IsChecked}"/>
+                    <ComboBox x:Name="PlannerDay3LegendItem" Grid.Column="4" Margin="5,5,5,5" Grid.Row="3" VerticalContentAlignment="Center" IsEnabled="{Binding ElementName=PlannerDay3Button, Path=IsChecked}"/>
+                    <ComboBox x:Name="PlannerDay4LegendItem" Grid.Column="4" Margin="5,5,5,5" Grid.Row="4" VerticalContentAlignment="Center" IsEnabled="{Binding ElementName=PlannerDay4Button, Path=IsChecked}"/>
+                    <ComboBox x:Name="PlannerDay5LegendItem" Grid.Column="4" Margin="5,5,5,5" Grid.Row="5" VerticalContentAlignment="Center" IsEnabled="{Binding ElementName=PlannerDay5Button, Path=IsChecked}"/>
+                    <ComboBox x:Name="PlannerDay6LegendItem" Grid.Column="4" Margin="5,5,5,5" Grid.Row="6" VerticalContentAlignment="Center" IsEnabled="{Binding ElementName=PlannerDay6Button, Path=IsChecked}"/>
+                    <ComboBox x:Name="PlannerDay7LegendItem" Grid.Column="4" Margin="5,5,5,5" Grid.Row="7" VerticalContentAlignment="Center" IsEnabled="{Binding ElementName=PlannerDay7Button, Path=IsChecked}"/>
+                    <ComboBox x:Name="PlannerNextWeekLegendItem" Grid.Column="4" Margin="5,5,5,5" Grid.Row="8" VerticalContentAlignment="Center" IsEnabled="{Binding ElementName=PlannerNextWeekButton, Path=IsChecked}"/>
 
                 </Grid>
             </TabItem>
