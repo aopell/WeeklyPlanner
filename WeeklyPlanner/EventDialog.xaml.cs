@@ -23,6 +23,8 @@ namespace WeeklyPlanner
     {
         public PlannerFile PlannerFile { get; }
 
+        public IEnumerable<ListBoxItem> LegendItemDisplays => PlannerFile.LegendItems.Select(x => x.Display);
+
         public EventDialog(PlannerFile file)
         {
             PlannerFile = file;

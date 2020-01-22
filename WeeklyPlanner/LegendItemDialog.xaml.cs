@@ -20,16 +20,11 @@ namespace WeeklyPlanner
     /// </summary>
     public partial class LegendItemDialog : Window
     {
-        public LegendItem LegendItem => previousLegendItem ?? newLegendItem;
-
-        private LegendItem newLegendItem = new LegendItem { Name = "", Color = Colors.Black };
-        private LegendItem previousLegendItem = null;
+        public LegendItem LegendItem = new LegendItem { Name = "", Color = Colors.Black };
 
         public LegendItemDialog(LegendItem toEdit = null)
         {
             InitializeComponent();
-
-            previousLegendItem = toEdit;
 
             if (toEdit != null)
             {
@@ -54,6 +49,6 @@ namespace WeeklyPlanner
             Close();
         }
 
-        public LegendItem GetOrModifyItem() => ShowDialog() == true ? LegendItem : previousLegendItem;
+        public LegendItem GetOrModifyItem() => ShowDialog() == true ? LegendItem : null;
     }
 }

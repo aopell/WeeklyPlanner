@@ -53,7 +53,19 @@ namespace WeeklyPlanner
 
             foreach (var item in legendItems)
             {
-                LegendListBox.Children.Add(item.Display);
+                var display = item.Display;
+                display.MouseDoubleClick += (a, b) =>
+                {
+                    LegendItem result = new LegendItemDialog(item).GetOrModifyItem();
+                    if (result != null)
+                    {
+                        int index = CurrentFile.LegendItems.IndexOf(item);
+                        CurrentFile.LegendItems.Remove(item);
+                        CurrentFile.LegendItems.Insert(index, result);
+                    }
+                    RenderCurrentFile();
+                };
+                LegendListBox.Children.Add(display);
             }
         }
 
@@ -78,11 +90,6 @@ namespace WeeklyPlanner
             LegendItem item = new LegendItemDialog().GetOrModifyItem();
             if (item != null)
             {
-                item.Display.MouseDoubleClick += (a, b) =>
-                {
-                    new LegendItemDialog(item).GetOrModifyItem();
-                    RenderCurrentFile();
-                };
                 CurrentFile.LegendItems.Add(item);
             }
 

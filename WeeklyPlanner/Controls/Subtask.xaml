@@ -13,6 +13,6 @@
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <local:FormattedWatermarkTextBox Margin="5,5,5,5" Text="{Binding TextBoxText}" Bold="{Binding TextBoxBold}" Italic="{Binding TextBoxItalic}"></local:FormattedWatermarkTextBox>
-        <ComboBox x:Name="ComboBox" Grid.Column="1" Margin="5,5,5,5" VerticalContentAlignment="Center" ItemsSource="{Binding ComboBoxItems}"/>
+        <ComboBox x:Name="ComboBox" Grid.Column="1" Margin="5,5,5,5" VerticalContentAlignment="Center" ItemsSource="{Binding ComboBoxItems}" Foreground="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem.Foreground}"/>
     </Grid>
 </UserControl>
