@@ -20,7 +20,8 @@ namespace WeeklyPlanner.Models
         {
             FontSize = 10,
             Content = $"■ {Name}",
-            Foreground = new SolidColorBrush(Color)
+            Foreground = new SolidColorBrush(Color),
+            Tag = ID
         };
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace WeeklyPlanner.Models
 {
@@ -18,6 +19,9 @@ namespace WeeklyPlanner.Models
         public IEnumerable<ChecklistEntry> MainListItems => Items.Where(x => x?.ChecklistEntry.MainList ?? false).Select(x => x.ChecklistEntry);
         [JsonIgnore]
         public IEnumerable<ChecklistEntry> SecondaryListItems => Items.Where(x => !(x?.ChecklistEntry.MainList ?? false)).Select(x => x.ChecklistEntry);
+
+        private static readonly LegendItem DefaultLegendItem = new LegendItem { Color = Colors.Black, Name = "LEGEND ITEM NOT FOUND" };
+        public LegendItem GetLegendItemById(Guid id) => LegendItems.FirstOrDefault(x => x.ID == id) ?? DefaultLegendItem;
 
         public PlannerFile()
         {

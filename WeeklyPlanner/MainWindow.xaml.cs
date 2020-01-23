@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using WeeklyPlanner.Models;
@@ -19,6 +20,8 @@ namespace WeeklyPlanner
         public PlannerFile CurrentFile { get; set; } = new PlannerFile();
 
         public ObservableCollection<ListBoxItem> LegendItemDisplays { get; } = new ObservableCollection<ListBoxItem>();
+
+        private static readonly SolidColorBrush BlackBrush = new SolidColorBrush(Colors.Black);
 
         public MainWindow()
         {
@@ -44,7 +47,54 @@ namespace WeeklyPlanner
         {
             UpdateDates(CurrentFile.StartDate);
             UpdateLegendItems(CurrentFile.LegendItems);
+            UpdateChecklistItems(CurrentFile);
             UpdatePlannerItems(CurrentFile);
+        }
+
+        private void UpdateChecklistItems(PlannerFile file)
+        {
+            ToDoList.Items.Clear();
+            MoreToDoList.Items.Clear();
+
+            foreach (var item in file.Items)
+            {
+                if (item.ChecklistEntry == null) continue;
+
+                var textBlock = new TextBlock();
+                var itemBrush = new SolidColorBrush(file.GetLegendItemById(item.LegendItemId).Color);
+
+                textBlock.Inlines.Add(new Run
+                {
+                    Text = item.Title,
+                    Foreground = itemBrush,
+                    FontWeight = item.TextFormatting.HasFlag(TextFormatting.Bold)
+                                     ? FontWeights.Bold
+                                     : FontWeights.Normal,
+                    FontStyle = item.TextFormatting.HasFlag(TextFormatting.Italics)
+                                    ? FontStyles.Italic
+                                    : FontStyles.Normal
+                });
+
+                foreach (var subtask in item.ChecklistEntry.Subtasks)
+                {
+                    textBlock.Inlines.Add(new Run
+                    {
+                        Text = $" ({subtask.Title})",
+                        Foreground = subtask.LegendItemId == Guid.Empty ? itemBrush : new SolidColorBrush(file.GetLegendItemById(subtask.LegendItemId).Color),
+                        FontWeight = subtask.TextFormatting.HasFlag(TextFormatting.Bold)
+                                         ? FontWeights.Bold
+                                         : FontWeights.Normal,
+                        FontStyle = subtask.TextFormatting.HasFlag(TextFormatting.Italics)
+                                        ? FontStyles.Italic
+                                        : FontStyles.Normal
+                    });
+                }
+
+                var checkbox = new CheckBox { Content = textBlock, VerticalContentAlignment = VerticalAlignment.Center };
+                var list = item.ChecklistEntry.MainList ? ToDoList : MoreToDoList;
+
+                list.Items.Add(checkbox);
+            }
         }
 
         private void UpdatePlannerItems(PlannerFile file)
@@ -103,9 +153,21 @@ namespace WeeklyPlanner
             RenderCurrentFile();
         }
 
-        private void Label_MouseDown(object sender, MouseButtonEventArgs e)
+        private void ThingsToDoLabel_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            new EventDialog(CurrentFile).ShowDialog();
+            if (CurrentFile.LegendItems.Count == 0)
+            {
+                MessageBox.Show("You must create at least one legend item before creating an event.");
+                return;
+            }
+
+            EventItem eventItem = new EventDialog(CurrentFile).GetOrModifyEvent();
+            if (eventItem != null)
+            {
+                CurrentFile.Items.Add(eventItem);
+            }
+
+            RenderCurrentFile();
         }
 
         private LegendItem moveTarget = null;

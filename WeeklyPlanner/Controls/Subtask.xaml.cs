@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WeeklyPlanner.Models;
 
 namespace WeeklyPlanner.Controls
 {
@@ -25,6 +26,7 @@ namespace WeeklyPlanner.Controls
         public static readonly DependencyProperty ComboBoxItemsProperty = DependencyProperty.Register(nameof(ComboBoxItems), typeof(IEnumerable), typeof(Subtask));
         public static readonly DependencyProperty TextBoxBoldProperty = DependencyProperty.Register(nameof(TextBoxBold), typeof(bool), typeof(Subtask));
         public static readonly DependencyProperty TextBoxItalicProperty = DependencyProperty.Register(nameof(TextBoxItalic), typeof(bool), typeof(Subtask));
+        public static readonly DependencyProperty TextBoxWatermarkProperty = DependencyProperty.Register(nameof(TextBoxWatermark), typeof(string), typeof(Subtask));
 
         public string TextBoxText
         {
@@ -50,6 +52,12 @@ namespace WeeklyPlanner.Controls
             set => SetValue(TextBoxItalicProperty, value);
         }
 
+        public string TextBoxWatermark
+        {
+            get => (string)GetValue(TextBoxWatermarkProperty);
+            set => SetValue(TextBoxWatermarkProperty, value);
+        }
+
         public object ComboBoxSelectedItem
         {
             get => ComboBox.SelectedItem;
@@ -61,6 +69,8 @@ namespace WeeklyPlanner.Controls
             get => ComboBox.SelectedIndex;
             set => ComboBox.SelectedIndex = value;
         }
+
+        public TaskItem TaskItem => new TaskItem { LegendItemId = (Guid)ComboBox.SelectedValue, Title = TextBox.Text, TextFormatting = TextBox.TextFormatting };
 
         public Subtask()
         {

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WeeklyPlanner.Models;
 
 namespace WeeklyPlanner.Controls
 {
@@ -48,6 +49,8 @@ namespace WeeklyPlanner.Controls
             get => (string)GetValue(WatermarkProperty);
             set => SetValue(WatermarkProperty, value);
         }
+
+        public TextFormatting TextFormatting => FormattingButtons.TextFormatting;
 
         public FormattedWatermarkTextBox()
         {

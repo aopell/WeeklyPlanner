@@ -36,7 +36,7 @@ namespace WeeklyPlanner.Controls
             set => SetValue(ItalicProperty, value);
         }
 
-        public TextFormatting TextFormatting => (Bold ? TextFormatting.Bold : TextFormatting.None) & (Italic ? TextFormatting.Italics : TextFormatting.None);
+        public TextFormatting TextFormatting => (BoldButton.IsChecked.Value ? TextFormatting.Bold : TextFormatting.None) | (ItalicButton.IsChecked.Value ? TextFormatting.Italics : TextFormatting.None);
 
         public TextFormattingButtons()
         {
