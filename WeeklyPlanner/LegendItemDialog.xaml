@@ -16,9 +16,10 @@
         <Label Content="Create Legend Item" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Name="HeaderLabel"/>
         <Label Content="Name" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
         <TextBox x:Name="NameTextBox" Height="26" Margin="59,52,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <xwtk:ColorPicker x:Name="LegendItemColorPicker" Margin="59,83,10,0" DisplayColorAndName="True" ShowRecentColors="True" SelectedColor="#FFFF0000" UsingAlphaChannel="False" Height="32" VerticalAlignment="Top"/>
+        <xwtk:ColorPicker x:Name="LegendItemColorPicker" Margin="59,83,10,0" DisplayColorAndName="True" ShowRecentColors="True" SelectedColor="#FFFF0000" UsingAlphaChannel="False" Height="32" VerticalAlignment="Top" ShowAvailableColors="False"/>
         <Label Content="Color" HorizontalAlignment="Left" Margin="10,86,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
         <Button Content="Save" Margin="0,0,10,10" HorizontalAlignment="Right" Width="75" Height="20" VerticalAlignment="Bottom" Click="SaveButtonClick" IsDefault="True"/>
         <Button Content="Cancel" Margin="0,0,90,10" Click="CancelButtonClick" HorizontalAlignment="Right" Width="75" Height="20" VerticalAlignment="Bottom" IsCancel="True"/>
+        <Button x:Name="DeleteButton" Content="Delete" Visibility="Hidden" HorizontalAlignment="Right" Margin="0,0,170,10" Width="75" Height="20" VerticalAlignment="Bottom" Click="DeleteButtonClick" IsEnabled="False"/>
     </Grid>
 </Window>

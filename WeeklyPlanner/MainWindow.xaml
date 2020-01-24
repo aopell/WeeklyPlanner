@@ -32,49 +32,49 @@
             <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="2" Grid.RowSpan="4" Margin="1"/>
             <Border BorderBrush="Black" BorderThickness="1">
                 <Grid>
-                    <ListBox x:Name="Day1List" FontSize="16" BorderBrush="{x:Null}" Margin="0,25,0,0" Background="{x:Null}" dd:DragDrop.IsDropTarget="True" dd:DragDrop.IsDragSource="True"/>
+                    <ListBox x:Name="Day1List" FontSize="16" BorderBrush="{x:Null}" Margin="0,20,0,0" Background="{x:Null}" dd:DragDrop.IsDropTarget="True" dd:DragDrop.IsDragSource="True"/>
                     <Label x:Name="Day1Label" Content="MONDAY 1/1" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Margin="0,-4,0,0"/>
                 </Grid>
             </Border>
             <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1">
                 <Grid Margin="1,1,-1,-1">
-                    <ListBox x:Name="Day5List" BorderBrush="{x:Null}" FontSize="16" Margin="0,25,0,0" Background="{x:Null}" dd:DragDrop.IsDropTarget="True" dd:DragDrop.IsDragSource="True"/>
+                    <ListBox x:Name="Day5List" BorderBrush="{x:Null}" FontSize="16" Margin="0,20,0,0" Background="{x:Null}" dd:DragDrop.IsDropTarget="True" dd:DragDrop.IsDragSource="True"/>
                     <Label x:Name="Day5Label" Content="FRIDAY 1/5" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Margin="0,-4,0,0"/>
                 </Grid>
             </Border>
             <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1">
                 <Grid>
-                    <ListBox x:Name="Day2List" BorderBrush="{x:Null}" FontSize="16" Margin="0,25,0,0" Background="{x:Null}" dd:DragDrop.IsDropTarget="True" dd:DragDrop.IsDragSource="True"/>
+                    <ListBox x:Name="Day2List" BorderBrush="{x:Null}" FontSize="16" Margin="0,20,0,0" Background="{x:Null}" dd:DragDrop.IsDropTarget="True" dd:DragDrop.IsDragSource="True"/>
                     <Label x:Name="Day2Label" Content="TUESDAY 1/2" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Margin="0,-4,0,0"/>
                 </Grid>
             </Border>
             <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Grid.Row="1">
                 <Grid Margin="1,1,-1,-1">
-                    <ListBox x:Name="Day6List" BorderBrush="{x:Null}" FontSize="16" Margin="0,25,0,0" Background="{x:Null}" dd:DragDrop.IsDropTarget="True" dd:DragDrop.IsDragSource="True"/>
+                    <ListBox x:Name="Day6List" BorderBrush="{x:Null}" FontSize="16" Margin="0,20,0,0" Background="{x:Null}" dd:DragDrop.IsDropTarget="True" dd:DragDrop.IsDragSource="True"/>
                     <Label x:Name="Day6Label" Content="SATURDAY 1/6" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Margin="0,-4,0,0"/>
                 </Grid>
             </Border>
             <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2">
                 <Grid Margin="1,1,-1,-1">
-                    <ListBox x:Name="Day3List" BorderBrush="{x:Null}" FontSize="16" Margin="0,25,0,0" Background="{x:Null}" dd:DragDrop.IsDropTarget="True" dd:DragDrop.IsDragSource="True"/>
+                    <ListBox x:Name="Day3List" BorderBrush="{x:Null}" FontSize="16" Margin="0,20,0,0" Background="{x:Null}" dd:DragDrop.IsDropTarget="True" dd:DragDrop.IsDragSource="True"/>
                     <Label x:Name="Day3Label" Content="WEDNESDAY 1/3" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Margin="0,-4,0,0"/>
                 </Grid>
             </Border>
             <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Grid.Row="2">
                 <Grid Margin="1,1,-1,-1">
-                    <ListBox x:Name="Day7List" BorderBrush="{x:Null}" FontSize="16" Margin="0,25,0,0" Background="{x:Null}" dd:DragDrop.IsDropTarget="True" dd:DragDrop.IsDragSource="True"/>
+                    <ListBox x:Name="Day7List" BorderBrush="{x:Null}" FontSize="16" Margin="0,20,0,0" Background="{x:Null}" dd:DragDrop.IsDropTarget="True" dd:DragDrop.IsDragSource="True"/>
                     <Label x:Name="Day7Label" Content="SUNDAY 1/7" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Margin="0,-4,0,0"/>
                 </Grid>
             </Border>
             <Border BorderBrush="Black" BorderThickness="1" Grid.Row="3">
                 <Grid Margin="1,1,-1,-1">
-                    <ListBox x:Name="Day4List" BorderBrush="{x:Null}" FontSize="16" Margin="0,25,0,0" Background="{x:Null}" dd:DragDrop.IsDropTarget="True" dd:DragDrop.IsDragSource="True"/>
+                    <ListBox x:Name="Day4List" BorderBrush="{x:Null}" FontSize="16" Margin="0,20,0,0" Background="{x:Null}" dd:DragDrop.IsDropTarget="True" dd:DragDrop.IsDragSource="True"/>
                     <Label x:Name="Day4Label" Content="THURSDAY 1/4" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Margin="0,-4,0,0"/>
                 </Grid>
             </Border>
             <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Grid.Row="3">
                 <Grid Margin="1,1,-1,-1">
-                    <ListBox x:Name="NextWeekList" BorderBrush="{x:Null}" FontSize="16" Margin="0,25,0,0" Background="{x:Null}" dd:DragDrop.IsDropTarget="True" dd:DragDrop.IsDragSource="True"/>
+                    <ListBox x:Name="NextWeekList" BorderBrush="{x:Null}" FontSize="16" Margin="0,20,0,0" Background="{x:Null}" dd:DragDrop.IsDropTarget="True" dd:DragDrop.IsDragSource="True"/>
                     <Label x:Name="NextWeekLabel" Content="COMING UP NEXT WEEK" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Margin="0,-4,0,0"/>
                 </Grid>
             </Border>

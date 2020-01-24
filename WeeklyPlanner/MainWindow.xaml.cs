@@ -93,6 +93,24 @@ namespace WeeklyPlanner
                 var checkbox = new CheckBox { Content = textBlock, VerticalContentAlignment = VerticalAlignment.Center };
                 var list = item.ChecklistEntry.MainList ? ToDoList : MoreToDoList;
 
+                checkbox.MouseDoubleClick += (a, b) =>
+                {
+                    var dialog = new EventDialog(CurrentFile, item);
+                    var result = dialog.GetOrModifyEvent();
+
+                    if (dialog.Deleted)
+                    {
+                        CurrentFile.Items.Remove(item);
+                    }
+                    if (result != null)
+                    {
+                        int index = CurrentFile.Items.IndexOf(item);
+                        CurrentFile.Items[index] = result;
+                    }
+
+                    RenderCurrentFile();
+                };
+
                 list.Items.Add(checkbox);
             }
         }
@@ -100,6 +118,11 @@ namespace WeeklyPlanner
         private void UpdatePlannerItems(PlannerFile file)
         {
             ListBox[] dayLists = { Day1List, Day2List, Day3List, Day4List, Day5List, Day6List, Day7List, NextWeekList };
+
+            foreach (var list in dayLists)
+            {
+                list.Items.Clear();
+            }
 
             foreach (var item in file.Items)
             {
@@ -112,7 +135,7 @@ namespace WeeklyPlanner
 
                     if (dayEntry == null) continue;
 
-                    list.Items.Add(new ListBoxItem
+                    var display = new ListBoxItem
                     {
                         Content = string.IsNullOrEmpty(dayEntry.Task.Title) ? item.Title : dayEntry.Task.Title,
                         Foreground = dayEntry.Task.LegendItemId == Guid.Empty ? itemBrush : new SolidColorBrush(file.GetLegendItemById(dayEntry.Task.LegendItemId).Color),
@@ -122,7 +145,27 @@ namespace WeeklyPlanner
                         FontStyle = dayEntry.Task.TextFormatting.HasFlag(TextFormatting.Italics)
                                         ? FontStyles.Italic
                                         : FontStyles.Normal
-                    });
+                    };
+
+                    display.MouseDoubleClick += (a, b) =>
+                    {
+                        var dialog = new EventDialog(CurrentFile, item);
+                        var result = dialog.GetOrModifyEvent();
+
+                        if (dialog.Deleted)
+                        {
+                            CurrentFile.Items.Remove(item);
+                        }
+                        if (result != null)
+                        {
+                            int index = CurrentFile.Items.IndexOf(item);
+                            CurrentFile.Items[index] = result;
+                        }
+
+                        RenderCurrentFile();
+                    };
+
+                    list.Items.Add(display);
                 }
             }
         }
@@ -137,12 +180,17 @@ namespace WeeklyPlanner
                 var display = item.Display;
                 display.MouseDoubleClick += (a, b) =>
                 {
-                    LegendItem result = new LegendItemDialog(item).GetOrModifyItem();
-                    if (result != null)
+                    var dialog = new LegendItemDialog(item);
+                    var result = dialog.GetOrModifyItem();
+
+                    if (dialog.Deleted)
+                    {
+                        CurrentFile.LegendItems.Remove(item);
+                    }
+                    else if (result != null)
                     {
                         int index = CurrentFile.LegendItems.IndexOf(item);
-                        CurrentFile.LegendItems.Remove(item);
-                        CurrentFile.LegendItems.Insert(index, result);
+                        CurrentFile.LegendItems[index] = result;
                     }
                     RenderCurrentFile();
                 };
@@ -154,7 +202,7 @@ namespace WeeklyPlanner
         private void UpdateDates(DateTime date)
         {
             TitleLabel.Content = $"Week of {CurrentFile.StartDate:dddd M/d} to {CurrentFile.StartDate + TimeSpan.FromDays(6):dddd M/d}";
-            var dayLabels = new[] { Day1Label, Day2Label, Day3Label, Day4Label, Day5Label, Day6Label, Day7Label };
+            Label[] dayLabels = { Day1Label, Day2Label, Day3Label, Day4Label, Day5Label, Day6Label, Day7Label };
             for (int i = 0; i < 7; i++)
             {
                 dayLabels[i].Content = (date + TimeSpan.FromDays(i)).ToString("dddd M/d").ToUpper();

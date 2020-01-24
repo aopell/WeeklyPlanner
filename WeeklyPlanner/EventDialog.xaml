@@ -11,7 +11,7 @@
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="Create Event" Height="580" MinHeight="580" MaxHeight="580" Width="500" MinWidth="500">
     <Grid>
-        <Label Content="Create Event" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
+        <Label x:Name="WindowTitleLabel" Content="Create Event" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
         <GroupBox Header="General" Height="98" Margin="10,52,10,0" VerticalAlignment="Top">
             <Grid>
                 <Label Content="Legend Item" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
@@ -21,7 +21,7 @@
             </Grid>
         </GroupBox>
         <Button x:Name="SaveButton" Content="Save" Margin="0,0,10,8" HorizontalAlignment="Right" Width="75" Height="20" VerticalAlignment="Bottom" IsDefault="True" Click="SaveButton_Click"/>
-        <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Right" Margin="0,0,90,8" VerticalAlignment="Bottom" Width="75" IsCancel="True"/>
+        <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Right" Margin="0,0,90,8" VerticalAlignment="Bottom" Width="75" IsCancel="True" Click="CancelButton_Click"/>
         <TabControl Margin="10,150,10,35">
             <TabItem Header="Checklist Entry" Name="TestThing">
                 <Grid>
@@ -104,5 +104,6 @@
                 </Grid>
             </TabItem>
         </TabControl>
+        <Button x:Name="DeleteButton" Click="DeleteButton_Click" Content="Delete" Margin="0,0,170,8" RenderTransformOrigin="0.502,-0.017" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" IsEnabled="False" Visibility="Hidden"/>
     </Grid>
 </Window>

@@ -13,7 +13,7 @@ namespace WeeklyPlanner.Models
     {
         public string Name { get; set; }
         public Color Color { get; set; }
-        public Guid ID { get; } = Guid.NewGuid();
+        public Guid ID { get; set; } = Guid.NewGuid();
 
         [JsonIgnore]
         public ListBoxItem Display => new ListBoxItem

@@ -22,6 +22,7 @@ namespace WeeklyPlanner
     public partial class EventDialog : Window
     {
         public EventItem EventItem = new EventItem();
+        public bool Deleted = false;
 
         public PlannerFile PlannerFile { get; }
 
@@ -44,6 +45,57 @@ namespace WeeklyPlanner
             {
                 button.Content = day.DayOfWeek.ToString();
                 day += TimeSpan.FromDays(1);
+            }
+
+            if (toEdit != null)
+            {
+                EditItem(toEdit);
+            }
+        }
+
+        private void EditItem(EventItem toEdit)
+        {
+            Title = "Edit Event";
+            WindowTitleLabel.Content = "Edit Event";
+            EventItem = toEdit;
+            DeleteButton.IsEnabled = true;
+            DeleteButton.Visibility = Visibility.Visible;
+
+            EventTitleTextBox.Text = toEdit.Title;
+            EventLegendItemComboBox.SelectedIndex = LegendItemDisplaysWithNone.ToList().FindIndex(x => (Guid)x.Tag == toEdit.LegendItemId);
+            EventTitleTextBox.Bold = toEdit.TextFormatting.HasFlag(TextFormatting.Bold);
+            EventTitleTextBox.Italic = toEdit.TextFormatting.HasFlag(TextFormatting.Italics);
+
+            if (toEdit.ChecklistEntry != null)
+            {
+                (toEdit.ChecklistEntry.MainList ? ChecklistEntryPrimaryButton : ChecklistEntrySecondaryButton).IsChecked = true;
+                foreach (var subtask in toEdit.ChecklistEntry.Subtasks)
+                {
+                    SubtaskListBox.Items.Add(new Subtask
+                    {
+                        ComboBoxItems = LegendItemDisplaysWithDefault,
+                        ComboBoxSelectedIndex = LegendItemDisplaysWithDefault.ToList().FindIndex(x => (Guid)x.Tag == subtask.LegendItemId),
+                        TextBoxText = subtask.Title,
+                        TextBoxBold = subtask.TextFormatting.HasFlag(TextFormatting.Bold),
+                        TextBoxItalic = subtask.TextFormatting.HasFlag(TextFormatting.Italics)
+                    });
+                }
+            }
+
+            var dayButtons = new[] { PlannerDay1Button, PlannerDay2Button, PlannerDay3Button, PlannerDay4Button, PlannerDay5Button, PlannerDay6Button, PlannerDay7Button };
+            var dayTextBoxes = new[] { PlannerDay1TitleTextBox, PlannerDay2TitleTextBox, PlannerDay3TitleTextBox, PlannerDay4TitleTextBox, PlannerDay5TitleTextBox, PlannerDay6TitleTextBox, PlannerDay7TitleTextBox, PlannerNextWeekTitleTextBox };
+            var dayComboBoxes = new[] { PlannerDay1LegendItem, PlannerDay2LegendItem, PlannerDay3LegendItem, PlannerDay4LegendItem, PlannerDay5LegendItem, PlannerDay6LegendItem, PlannerDay7LegendItem, PlannerNextWeekLegendItem };
+
+            for (int i = 0; i < toEdit.PlannerEntry.DayEntries.Length; i++)
+            {
+                var dayEntry = toEdit.PlannerEntry.DayEntries[i];
+                if (dayEntry == null) continue;
+
+                dayButtons[i].IsChecked = true;
+                dayTextBoxes[i].Text = dayEntry.Task.Title;
+                dayTextBoxes[i].Bold = dayEntry.Task.TextFormatting.HasFlag(TextFormatting.Bold);
+                dayTextBoxes[i].Italic = dayEntry.Task.TextFormatting.HasFlag(TextFormatting.Italics);
+                dayComboBoxes[i].SelectedIndex = LegendItemDisplaysWithDefault.ToList().FindIndex(x => (Guid)x.Tag == dayEntry.Task.LegendItemId);
             }
         }
 
@@ -173,6 +225,25 @@ namespace WeeklyPlanner
             };
 
             DialogResult = true;
+            Close();
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to delete this event?",
+                                "Confirm Delete",
+                                MessageBoxButton.YesNo)
+                == MessageBoxResult.Yes)
+            {
+                DialogResult = false;
+                Deleted = true;
+                Close();
+            }
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
             Close();
         }
     }
