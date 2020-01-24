@@ -3,11 +3,14 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using Microsoft.Win32;
+using Newtonsoft.Json;
 using WeeklyPlanner.Models;
 
 namespace WeeklyPlanner
@@ -33,8 +36,6 @@ namespace WeeklyPlanner
         {
             Height = heightInches * 96 + 39;
             Width = widthInches * 96 + 16;
-
-            // Print(MainGrid);
 
             var printDialog = new PrintDialog();
             if (printDialog.ShowDialog() == true)
@@ -112,6 +113,21 @@ namespace WeeklyPlanner
                 };
 
                 list.Items.Add(checkbox);
+            }
+
+            if (file.AddExtraCheckBoxes)
+            {
+                int itemsCount = ToDoList.Items.Count;
+                for (int i = 0; i < (ToDoList.ActualHeight / 27.5) - itemsCount; i++)
+                {
+                    ToDoList.Items.Add(new CheckBox { Content = " ", VerticalContentAlignment = VerticalAlignment.Center });
+                }
+
+                itemsCount = MoreToDoList.Items.Count;
+                for (int i = 0; i < (MoreToDoList.ActualHeight / 27.5) - itemsCount; i++)
+                {
+                    MoreToDoList.Items.Add(new CheckBox { Content = " ", VerticalContentAlignment = VerticalAlignment.Center });
+                }
             }
         }
 
@@ -211,7 +227,55 @@ namespace WeeklyPlanner
 
         private void Title_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            CurrentFile.StartDate = new DatePicker(CurrentFile.StartDate).PromptDate();
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                CurrentFile.StartDate = new DatePicker(CurrentFile.StartDate).PromptDate();
+            }
+            else if (e.RightButton == MouseButtonState.Pressed)
+            {
+                var options = new Options(CurrentFile);
+                switch (options.ShowAndGetResult())
+                {
+                    case Options.Result.Print:
+                        PrintWindow(MainGrid, Title, options.PageWidth, options.PageHeight);
+                        break;
+                    case Options.Result.Open:
+                        OpenFileDialog ofd = new OpenFileDialog();
+                        ofd.Filter = "Weekly Planner JSON Files (*.wkpln)|*.wkpln";
+                        if (ofd.ShowDialog() != true) break;
+
+                        try
+                        {
+                            string text = File.ReadAllText(ofd.FileName);
+                            CurrentFile = JsonConvert.DeserializeObject<PlannerFile>(text);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.ToString(), "Error Opening File", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+
+                        break;
+                    case Options.Result.Save:
+                        SaveFileDialog sfd = new SaveFileDialog();
+                        sfd.Filter = "Weekly Planner JSON Files (*.wkpln)|*.wkpln";
+                        sfd.DefaultExt = "wkpln";
+                        sfd.FileName = $"Week of {CurrentFile.StartDate.Year:0000}-{CurrentFile.StartDate.Month:00}-{CurrentFile.StartDate.Day:00}.wkpln";
+                        if (sfd.ShowDialog() != true) break;
+
+                        try
+                        {
+                            string text = JsonConvert.SerializeObject(CurrentFile);
+                            File.WriteAllText(sfd.FileName, text);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.ToString(), "Error Saving File", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+
+                        break;
+                }
+            }
+
             RenderCurrentFile();
         }
 

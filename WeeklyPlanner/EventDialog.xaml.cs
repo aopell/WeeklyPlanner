@@ -82,7 +82,7 @@ namespace WeeklyPlanner
                 }
             }
 
-            var dayButtons = new[] { PlannerDay1Button, PlannerDay2Button, PlannerDay3Button, PlannerDay4Button, PlannerDay5Button, PlannerDay6Button, PlannerDay7Button };
+            var dayButtons = new[] { PlannerDay1Button, PlannerDay2Button, PlannerDay3Button, PlannerDay4Button, PlannerDay5Button, PlannerDay6Button, PlannerDay7Button, PlannerNextWeekButton };
             var dayTextBoxes = new[] { PlannerDay1TitleTextBox, PlannerDay2TitleTextBox, PlannerDay3TitleTextBox, PlannerDay4TitleTextBox, PlannerDay5TitleTextBox, PlannerDay6TitleTextBox, PlannerDay7TitleTextBox, PlannerNextWeekTitleTextBox };
             var dayComboBoxes = new[] { PlannerDay1LegendItem, PlannerDay2LegendItem, PlannerDay3LegendItem, PlannerDay4LegendItem, PlannerDay5LegendItem, PlannerDay6LegendItem, PlannerDay7LegendItem, PlannerNextWeekLegendItem };
 
@@ -104,6 +104,14 @@ namespace WeeklyPlanner
             SubtaskListBox.Items.Add(new Subtask { ComboBoxItems = LegendItemDisplaysWithDefault, ComboBoxSelectedIndex = 0 });
         }
 
+        private void AddNumberSubtasksButton_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 1; i <= SubtaskNumberCounter.Value; i++)
+            {
+                SubtaskListBox.Items.Add(new Subtask { TextBoxText = i.ToString(), ComboBoxItems = LegendItemDisplaysWithDefault, ComboBoxSelectedIndex = 0 });
+            }
+        }
+
         private void SubtaskListBox_KeyDown(object sender, KeyEventArgs e)
         {
             if ((e.Key == Key.Delete || e.Key == Key.Back) && SubtaskListBox.SelectedIndex != -1)
@@ -116,6 +124,20 @@ namespace WeeklyPlanner
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            if (ChecklistEntryNoneButton.IsChecked.Value &&
+                !PlannerDay1Button.IsChecked.Value &&
+                !PlannerDay2Button.IsChecked.Value &&
+                !PlannerDay3Button.IsChecked.Value &&
+                !PlannerDay4Button.IsChecked.Value &&
+                !PlannerDay5Button.IsChecked.Value &&
+                !PlannerDay6Button.IsChecked.Value &&
+                !PlannerDay7Button.IsChecked.Value &&
+                !PlannerNextWeekButton.IsChecked.Value)
+            {
+                MessageBox.Show("You must select at least one checklist or planner day to save this item", "Error Saving", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
+
             EventItem = new EventItem
             {
                 Title = EventTitleTextBox.Text,
