@@ -99,7 +99,32 @@ namespace WeeklyPlanner
 
         private void UpdatePlannerItems(PlannerFile file)
         {
+            ListBox[] dayLists = { Day1List, Day2List, Day3List, Day4List, Day5List, Day6List, Day7List, NextWeekList };
 
+            foreach (var item in file.Items)
+            {
+                var itemBrush = new SolidColorBrush(file.GetLegendItemById(item.LegendItemId).Color);
+
+                for (int i = 0; i < 8; i++)
+                {
+                    var list = dayLists[i];
+                    var dayEntry = item.PlannerEntry.DayEntries[i];
+
+                    if (dayEntry == null) continue;
+
+                    list.Items.Add(new ListBoxItem
+                    {
+                        Content = string.IsNullOrEmpty(dayEntry.Task.Title) ? item.Title : dayEntry.Task.Title,
+                        Foreground = dayEntry.Task.LegendItemId == Guid.Empty ? itemBrush : new SolidColorBrush(file.GetLegendItemById(dayEntry.Task.LegendItemId).Color),
+                        FontWeight = dayEntry.Task.TextFormatting.HasFlag(TextFormatting.Bold)
+                                         ? FontWeights.Bold
+                                         : FontWeights.Normal,
+                        FontStyle = dayEntry.Task.TextFormatting.HasFlag(TextFormatting.Italics)
+                                        ? FontStyles.Italic
+                                        : FontStyles.Normal
+                    });
+                }
+            }
         }
 
         private void UpdateLegendItems(List<LegendItem> legendItems)
